@@ -94,6 +94,7 @@ function AddForm({ onClose, existingEmails, onAdd }: Omit<Props, "open">) {
                 />
               </Inline>
               <Select
+                fit
                 aria-label={`Role ${i + 1}`}
                 placeholder="Select role"
                 options={roleOptions}
