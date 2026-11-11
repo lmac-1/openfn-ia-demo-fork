@@ -40,7 +40,7 @@ export default function Breadcrumbs({
 
   return (
     <nav className="flex items-center gap-1.5 text-sm text-gray-500">
-      <Link to="/" className="hover:text-gray-900 flex items-center gap-1">
+      <Link to="/" aria-label="Home" className="hover:text-gray-900 flex items-center gap-1">
         <Home size={14} />
       </Link>
       {ancestors.map((a) => (
