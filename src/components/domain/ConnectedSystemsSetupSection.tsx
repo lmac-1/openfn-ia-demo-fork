@@ -40,7 +40,7 @@ export default function ConnectedSystemsSetupSection({
       />
 
       <Card className="space-y-4">
-        <ProgressBar value={total} max={recommended} showCount />
+        <ProgressBar label="Recommended systems connected" value={total} max={recommended} showCount />
 
         <div className="flex flex-wrap items-center gap-2">
           {systems.map((system) => (

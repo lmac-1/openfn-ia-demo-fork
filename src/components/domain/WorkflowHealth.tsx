@@ -87,7 +87,7 @@ export default function WorkflowHealth({
                       </span>
                       <span className="flex-shrink-0 font-medium tabular-nums text-red-600">{s.failed}</span>
                     </div>
-                    <ProgressBar value={s.failed} max={mostFailed} tone="red" />
+                    <ProgressBar label={`Failures at ${s.label}`} value={s.failed} max={mostFailed} tone="red" />
                   </li>
                 ))}
               </ul>

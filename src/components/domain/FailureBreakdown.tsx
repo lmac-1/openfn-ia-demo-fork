@@ -128,7 +128,7 @@ export default function FailureBreakdown({
                             </span>
                           </span>
                           <span className="mt-1.5 block">
-                            <ProgressBar value={r.count} max={total} tone="red" />
+                            <ProgressBar label={`Share of failures: ${r.reason}`} value={r.count} max={total} tone="red" />
                           </span>
                           {scope !== "step" && (
                             <span className="mt-1 block truncate text-[11px] text-gray-400">at {r.steps.join(", ")}</span>
