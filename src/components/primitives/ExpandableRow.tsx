@@ -4,8 +4,11 @@ import { ChevronRight } from "lucide-react";
 interface Props {
   /** What the row says. Clicking it shows or hides `details`. */
   children: ReactNode;
-  /** Read by screen readers for the toggle, e.g. "Work order 896d2dcb". */
-  label: string;
+  /**
+   * The toggle's name, only where its text would read badly, e.g. a masked
+   * value. Start it with the row's visible text. Left out, the text names it.
+   */
+  label?: string;
   expanded: boolean;
   onToggle: () => void;
   /** Before the chevron, outside the toggle, e.g. a checkbox to select the row. */

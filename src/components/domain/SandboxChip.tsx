@@ -136,7 +136,7 @@ export default function SandboxChip({
           onClick={toggle}
           aria-haspopup="dialog"
           aria-expanded={open}
-          aria-label={onMain ? `main, ${live ? "live" : "paused"}` : `Sandbox ${value}, ${label.toLowerCase()}`}
+          aria-label={onMain ? `${live ? "Live" : "Paused"}, main` : `${value}, ${label.toLowerCase()}, sandbox`}
           title={onMain ? `main · ${live ? "live" : "paused"}` : `Sandbox ${value} · ${label.toLowerCase()}`}
           className={trigger}
         >
@@ -146,7 +146,8 @@ export default function SandboxChip({
             <FlaskConical size={12} className="flex-none text-amber-600" />
           )}
           <span className="min-w-0 max-w-[12rem] truncate">{onMain ? (live ? "Live" : "Paused") : value}</span>
-          {count > 0 && <CountBadge count={count} tone="amber" />}
+          {/* Unrendered between flex items; keeps the name and the count apart in the text read off the chip. */}
+          {count > 0 && <> <CountBadge count={count} tone="amber" /></>}
           <ChevronDown size={12} className="flex-none opacity-60" />
         </button>
       )}

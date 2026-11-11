@@ -25,7 +25,7 @@ interface Props extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "children"
   tone?: "gray" | "accent";
   /** A small dot in the corner, e.g. when the tray has something new. */
   dot?: boolean;
-  /** A small count in the corner, e.g. how many changes it lists; 0 shows none. Takes the place of `dot`. */
+  /** A small count in the corner, e.g. how many changes it lists, said after the label; 0 shows none. Takes the place of `dot`. */
   count?: number;
   ref?: Ref<HTMLButtonElement>;
 }
@@ -72,7 +72,7 @@ export default function IconButton({
     <button
       {...rest}
       type={type}
-      aria-label={label}
+      aria-label={count > 0 ? `${label}, ${count}` : label}
       aria-pressed={variant === "toggle" ? !!pressed : rest["aria-pressed"]}
       title={title ?? (hint ? `${label} (${hint})` : label)}
       className={`relative inline-flex ${box} flex-shrink-0 items-center justify-center rounded-md transition-colors disabled:cursor-not-allowed disabled:bg-transparent disabled:text-gray-300 ${look}`}

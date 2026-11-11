@@ -1,4 +1,4 @@
-import { useId, useState } from "react";
+import { Fragment, useId, useState } from "react";
 import type { FormEvent } from "react";
 import { Eye, EyeOff, Lock, Pencil, Trash2 } from "lucide-react";
 import type { Environment } from "../../model/credentials";
@@ -56,7 +56,16 @@ export default function EnvVarRow({ variable: v, existing, onUpdate, onDelete, d
 
   return (
     <ExpandableRow
-      label={`${onUpdate ? "Edit" : "Details of"} ${v.key} in ${v.environments.map((e) => environmentLabels[e]).join(", ")}`}
+      // The row's text, without the mask's dots: "DHIS2_BASE_URL, Production, Staging, edit".
+      label={[
+        v.key,
+        !v.secret && revealed ? v.value || "empty" : undefined,
+        v.secret ? "Secret" : undefined,
+        ...v.environments.map((e) => environmentLabels[e]),
+        onUpdate ? "edit" : undefined,
+      ]
+        .filter(Boolean)
+        .join(", ")}
       expanded={expanded}
       onToggle={() => setExpanded((x) => !x)}
       trailing={
@@ -88,19 +97,23 @@ export default function EnvVarRow({ variable: v, existing, onUpdate, onDelete, d
         )
       }
     >
+      {/* The spaces between cells aren't drawn in a grid or a row, but keep the words apart in the text read off the row. */}
       <Grid columns={3} gap="md">
         <Text tone="strong" mono truncate>
           {v.key}
-        </Text>
+        </Text>{" "}
         <Inline gap="sm">
           <Text tone="muted" mono size="xs" truncate>
             {v.secret || !revealed ? MASK : v.value || "(empty)"}
           </Text>
-          {v.secret && <Badge label="Secret" shape="tag" icon={Lock} />}
-        </Inline>
+          {v.secret && <> <Badge label="Secret" shape="tag" icon={Lock} /></>}
+        </Inline>{" "}
         <Inline gap="xs" wrap>
           {v.environments.map((e) => (
-            <EnvironmentBadge key={e} environment={e} />
+            <Fragment key={e}>
+              {" "}
+              <EnvironmentBadge environment={e} />
+            </Fragment>
           ))}
         </Inline>
       </Grid>

@@ -30,7 +30,7 @@ interface Props {
   /** ID of the selected option. */
   value: string;
   onChange?: (id: string) => void;
-  /** Accessible name for the trigger and menu, e.g. "Switch project". */
+  /** What it's for, e.g. "Switch project": the menu's name, and said after the trigger's text. */
   ariaLabel: string;
   /** Optional link-style action pinned below the options, e.g. "View all". */
   footerAction?: { label: string; icon?: LucideIcon; onClick: () => void };
@@ -88,7 +88,6 @@ export default function Picker({
         type="button"
         aria-haspopup="listbox"
         aria-expanded={open}
-        aria-label={ariaLabel}
         onClick={() => setOpen((o) => !o)}
         className={
           trigger
@@ -114,6 +113,8 @@ export default function Picker({
             <ChevronDown size={14} className="flex-shrink-0 text-gray-400" />
           </>
         )}
+        {/* Named by what it shows, then what it's for: "Project A, Switch project". */}
+        <span className="sr-only">, {ariaLabel}</span>
       </button>
 
       {open && (

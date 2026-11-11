@@ -42,7 +42,7 @@ async function backedService() {
 /** Opens the Fn menu once the workflow is in: while it loads, the button is there but doesn't open. */
 async function openWorkflowMenu() {
   const button = await waitFor(() => {
-    const found = screen.getByRole("button", { name: "Workflow menu" });
+    const found = screen.getByRole("button", { name: "Fn, workflow menu" });
     expect(found.getAttribute("aria-disabled")).toBeNull();
     return found;
   }, wait);
@@ -76,7 +76,7 @@ describe("WorkflowEditorPageQuery", { timeout: 15000 }, () => {
     setWait(50);
     renderEditor(apiWorkflowId("planning-application-workflow"));
     expect(await screen.findByText("Loading workflow…")).toBeTruthy();
-    expect(screen.getByRole("button", { name: "Workflow menu" }).getAttribute("aria-disabled")).toBe("true");
+    expect(screen.getByRole("button", { name: "Fn, workflow menu" }).getAttribute("aria-disabled")).toBe("true");
     // The project is asked for only once the workflow names it: it loads in turn, rather than reading as missing.
     while (screen.queryByText("Loading workflow…")) {
       expect(screen.queryByText("Page Not Found")).toBeNull();
@@ -161,7 +161,7 @@ describe("WorkflowEditorPageQuery", { timeout: 15000 }, () => {
     act(() => setSandbox(projectId, "add-docs"));
     try {
       renderEditor(apiWorkflowId("planning-application-workflow"));
-      expect(await screen.findByRole("button", { name: "Sandbox add-docs, no changes" }, wait)).toBeTruthy();
+      expect(await screen.findByRole("button", { name: "add-docs, no changes, sandbox" }, wait)).toBeTruthy();
 
       fireEvent.click(await screen.findByText("Explorer", {}, wait));
       fireEvent.click(await screen.findByRole("button", { name: "Add project component" }, wait));
@@ -170,7 +170,7 @@ describe("WorkflowEditorPageQuery", { timeout: 15000 }, () => {
       fireEvent.change(within(form).getByLabelText(/^Name/), { target: { value: "runbook" } });
       fireEvent.click(screen.getByRole("button", { name: "Create document" }));
 
-      fireEvent.click(await screen.findByRole("button", { name: "Sandbox add-docs, 1 change" }, wait));
+      fireEvent.click(await screen.findByRole("button", { name: "add-docs, 1 change, sandbox" }, wait));
       expect(await screen.findByText("Added document runbook", {}, wait)).toBeTruthy();
     } finally {
       act(() => setSandbox(projectId, "main"));

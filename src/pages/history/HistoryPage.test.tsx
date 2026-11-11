@@ -54,7 +54,7 @@ describe("HistoryPage", () => {
   it("lists the work orders it's given, newest first, and says when there are none", () => {
     draw([order("aaa111", "success"), order("bbb222", "failed")]);
     expect(screen.getByText("2 work orders, newest first")).toBeTruthy();
-    expect(screen.getByRole("button", { name: "Work order aaa111, success" })).toBeTruthy();
+    expect(screen.getByRole("button", { name: /aaa111.*Success/, expanded: false })).toBeTruthy();
 
     draw([]);
     expect(screen.getByText("No work orders yet")).toBeTruthy();
@@ -63,7 +63,7 @@ describe("HistoryPage", () => {
   it("shows only the work orders the filters let through", () => {
     draw([order("aaa111", "success"), order("bbb222", "failed")], { ...defaultHistoryFilters, statuses: ["failed"] });
     expect(screen.getByText("1 work order of 2, newest first")).toBeTruthy();
-    expect(screen.queryByRole("button", { name: "Work order aaa111, success" })).toBeNull();
+    expect(screen.queryByRole("button", { name: /aaa111.*Success/, expanded: false })).toBeNull();
   });
 
   it("retries a finished work order, and says so once the server has it", async () => {

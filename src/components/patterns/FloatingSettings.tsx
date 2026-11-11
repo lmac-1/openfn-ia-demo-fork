@@ -82,7 +82,7 @@ export default function FloatingSettings({ title, sections, badge, hint, default
         type="button"
         aria-haspopup="dialog"
         aria-expanded={open}
-        aria-label={`Open ${title.toLowerCase()}`}
+        aria-label={`Open ${title.toLowerCase()}${badge ? `, ${badge}` : ""}`}
         title={hint ?? title}
         onClick={() => setOpen((v) => !v)}
         style={styles.trigger}

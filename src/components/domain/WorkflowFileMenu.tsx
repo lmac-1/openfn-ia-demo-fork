@@ -95,7 +95,7 @@ export default function WorkflowFileMenu({
           aria-haspopup="menu"
           aria-expanded={open}
           aria-disabled={disabled || undefined}
-          aria-label="Workflow menu"
+          aria-label="Fn, workflow menu"
           className={`inline-flex h-full items-center gap-1 rounded-l-xl px-3 text-gray-900 transition-colors ${
             open ? "bg-gray-100" : disabled ? "cursor-default" : "hover:bg-gray-50"
           }`}

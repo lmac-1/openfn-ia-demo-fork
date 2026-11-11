@@ -56,7 +56,6 @@ export default function WorkOrderEntry({
 
   return (
     <ExpandableRow
-      label={`Work order ${workOrder.id}, ${workOrder.status}`}
       expanded={expanded}
       onToggle={onToggle}
       selected={selected}

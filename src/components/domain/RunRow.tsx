@@ -40,7 +40,6 @@ export default function RunRow({
         type="button"
         onClick={() => onSelect?.(run)}
         aria-pressed={selected}
-        aria-label={`Run ${run.runId}, ${run.status}, ${run.when}`}
         className="flex min-w-0 flex-1 items-center gap-2 text-left"
       >
         <StatusPill status={run.status} variant="dot" />

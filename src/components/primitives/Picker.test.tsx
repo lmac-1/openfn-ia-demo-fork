@@ -13,7 +13,7 @@ const press = (key: string, shiftKey = false) => fireEvent.keyDown(focused()!, {
 
 function draw(onChange = vi.fn(), footerAction?: { label: string; onClick: () => void }) {
   render(<Picker ariaLabel="Switch version" options={options} value="v3" onChange={onChange} footerAction={footerAction} />);
-  const trigger = screen.getByRole("button", { name: "Switch version" });
+  const trigger = screen.getByRole("button", { name: "Version 3, Switch version" });
   trigger.focus();
   fireEvent.click(trigger);
   return trigger;

@@ -50,7 +50,7 @@ export const TogglePressed: Story = {
 
 /** A count in the corner, e.g. how many changes a sandbox has. */
 export const WithCount: Story = {
-  args: { size: "md", icon: SquarePlusMinus, label: "Changes (3)", count: 3 },
+  args: { size: "md", icon: SquarePlusMinus, label: "Changes", count: 3 },
 };
 
 export const WithDot: Story = {

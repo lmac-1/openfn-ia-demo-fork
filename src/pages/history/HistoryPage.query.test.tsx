@@ -40,8 +40,8 @@ type ApiWorkOrder = { id: string; attributes: { state: string; workflow_id: stri
 /** Every work order the server has at `path`, across its pages. */
 const serverOrders = (path = `/api/projects/${projectId}/work_orders?include=runs`) => listAll<ApiWorkOrder>(path);
 
-/** The button that opens a work order's row, by its id. */
-const row = (id: string) => screen.findByRole("button", { name: new RegExp(`^Work order ${id},`) }, wait);
+/** The button that opens a work order's row, which shows its id. */
+const row = async (id: string) => (await screen.findAllByText(id, {}, wait))[0]!.closest<HTMLElement>("button[aria-expanded]")!;
 
 // Rendering a project's whole history (and the editor, for "opens a run") takes several seconds in jsdom, near the default 5s under a full run.
 describe("HistoryPageQuery", { timeout: 15000 }, () => {
@@ -57,8 +57,8 @@ describe("HistoryPageQuery", { timeout: 15000 }, () => {
     const orders = await serverOrders();
     renderAt(projectPath);
     expect(await screen.findByText(`${orders.length} work orders, newest first`, {}, wait)).toBeTruthy();
-    const shown = screen.getAllByRole("button", { name: /^Work order / }).map((b) => b.getAttribute("aria-label") ?? b.textContent ?? "");
-    for (const o of orders) expect(shown.some((name) => name.startsWith(`Work order ${o.id},`))).toBe(true);
+    const shown = screen.getAllByRole("button", { expanded: false }).map((b) => b.textContent ?? "");
+    for (const o of orders) expect(shown.some((name) => name.includes(o.id))).toBe(true);
   });
 
   it("reads its filters from the URL", async () => {
