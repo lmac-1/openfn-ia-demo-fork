@@ -48,12 +48,12 @@ export default function DataSourcePicker({ source, lightningAvailable, onChoose,
   return (
     <div>
       <p style={s.subtitle}>Where the app's data comes from. Switching reloads the page.</p>
-      <ul role="radiogroup" aria-label="Data source" style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 4 }}>
+      <div role="radiogroup" aria-label="Data source" style={{ display: "flex", flexDirection: "column", gap: 4 }}>
         {options.map((option) => {
           const active = option.id === source;
           const unavailable = option.id === "lightning" && !lightningAvailable;
           return (
-            <li key={option.id}>
+            <div key={option.id}>
               <button
                 type="button"
                 role="radio"
@@ -77,10 +77,10 @@ export default function DataSourcePicker({ source, lightningAvailable, onChoose,
                 </span>
                 <span style={s.check}>{active && <Check size={16} />}</span>
               </button>
-            </li>
+            </div>
           );
         })}
-      </ul>
+      </div>
 
       {source === "fixtures" && onResetData && (
         <button
