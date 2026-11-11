@@ -75,9 +75,9 @@ export default function TriggerConfigPanel({
           />
         </FormField>
         {trigger.triggerType === "webhook" && (
-          <FormField label="Webhook URL" hint="POST a JSON body to this URL to start a run.">
+          <FormField label="Webhook URL" htmlFor="trigger-url" hint="POST a JSON body to this URL to start a run.">
             <div className="flex items-center gap-1.5">
-              <TextInput readOnly value={url ?? "Available once the workflow is live"} className="font-mono text-xs" />
+              <TextInput id="trigger-url" readOnly value={url ?? "Available once the workflow is live"} className="font-mono text-xs" />
               {url && (
                 <button
                   type="button"

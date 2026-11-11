@@ -4,8 +4,8 @@ interface Props {
   /** Whether it's on. The switch flips straight away when pressed, and follows this when it changes. */
   checked?: boolean;
   onChange?: (checked: boolean) => void;
-  /** Optional label rendered to the right of the switch, and its accessible name. */
-  label?: string;
+  /** Its accessible name, drawn to the right of the switch unless `hideLabel`. */
+  label: string;
   /** Quieter text after the label, e.g. "(currently optional for this project)". */
   detail?: string;
   /** Keeps the label for screen readers only, as in a list row where the column says what it is. */
@@ -50,7 +50,7 @@ export default function ToggleSwitch({ checked = false, onChange, label, detail,
     </button>
   );
 
-  if (!label || hideLabel) return control;
+  if (hideLabel) return control;
 
   return (
     <div className="flex items-center gap-2">

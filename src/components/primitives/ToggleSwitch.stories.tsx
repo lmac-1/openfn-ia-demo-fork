@@ -10,11 +10,11 @@ export default meta;
 type Story = StoryObj<typeof ToggleSwitch>;
 
 export const Off: Story = {
-  args: { checked: false },
+  args: { checked: false, label: "Referral sync enabled", hideLabel: true },
 };
 
 export const On: Story = {
-  args: { checked: true },
+  args: { checked: true, label: "Referral sync enabled", hideLabel: true },
 };
 
 export const WithLabel: Story = {

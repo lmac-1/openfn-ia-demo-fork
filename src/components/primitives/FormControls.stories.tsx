@@ -11,12 +11,12 @@ export default meta;
 type Story = StoryObj;
 
 export const Text: Story = {
-  render: () => <TextInput defaultValue="brandon-demo" />,
+  render: () => <TextInput aria-label="Project name" defaultValue="brandon-demo" />,
 };
 
 /** Monospaced, for a key or an id. */
 export const MonoText: Story = {
-  render: () => <TextInput mono defaultValue="DHIS2_BASE_URL" />,
+  render: () => <TextInput aria-label="Key" mono defaultValue="DHIS2_BASE_URL" />,
 };
 
 export const Password: Story = {
@@ -24,26 +24,27 @@ export const Password: Story = {
 };
 
 export const Disabled: Story = {
-  render: () => <TextInput defaultValue="Read only value" disabled />,
+  render: () => <TextInput aria-label="Project name" defaultValue="Read only value" disabled />,
 };
 
 export const MultiLine: Story = {
-  render: () => <TextArea rows={3} defaultValue="A short description of a project." />,
+  render: () => <TextArea aria-label="Description" rows={3} defaultValue="A short description of a project." />,
 };
 
 /** Monospaced, for a JSON body or code. */
 export const MonoTextArea: Story = {
-  render: () => <TextArea mono rows={4} defaultValue={'{\n  "apiKey": "demo-not-a-real-key"\n}'} />,
+  render: () => <TextArea aria-label="Body" mono rows={4} defaultValue={'{\n  "apiKey": "demo-not-a-real-key"\n}'} />,
 };
 
 export const Dropdown: Story = {
-  render: () => <Select options={["7 Days", "14 Days", "30 Days"]} defaultValue="14 Days" />,
+  render: () => <Select aria-label="Period" options={["7 Days", "14 Days", "30 Days"]} defaultValue="14 Days" />,
 };
 
 /** Values that differ from their labels, with a placeholder chosen until something else is. */
 export const DropdownWithLabels: Story = {
   render: () => (
     <Select
+      aria-label="Role"
       placeholder="Select role"
       options={[
         { value: "viewer", label: "Viewer" },
@@ -57,7 +58,7 @@ export const DropdownWithLabels: Story = {
 
 /** A select inside a table row. */
 export const CompactDropdown: Story = {
-  render: () => <Select compact options={["Never", "Daily", "Weekly", "Monthly"]} defaultValue="Weekly" />,
+  render: () => <Select aria-label="Frequency" compact options={["Never", "Daily", "Weekly", "Monthly"]} defaultValue="Weekly" />,
 };
 
 export const Radios: Story = {

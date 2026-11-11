@@ -88,6 +88,7 @@ export default function StepConfigPanel({
         {systems.length > 0 && (
           <FormField
             label="System"
+            htmlFor="step-system"
             hint={
               method === "xroad"
                 ? "Reached over X-Road: the route and headers come from your organisation's settings."
@@ -98,6 +99,7 @@ export default function StepConfigPanel({
           >
             <div className="flex items-center gap-2">
               <Select
+                id="step-system"
                 className="w-full"
                 options={[NO_SYSTEM, ...systems.map((s) => s.name)]}
                 value={system?.name ?? NO_SYSTEM}

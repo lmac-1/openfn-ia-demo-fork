@@ -317,6 +317,7 @@ export default function AddConnectedSystemFlow({
           <button
             type="button"
             onClick={handleClose}
+            aria-label="Close"
             className="rounded-md p-1 text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
           >
             <X size={18} />

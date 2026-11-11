@@ -2,7 +2,7 @@ import { cloneElement, isValidElement, useId, type ReactNode } from "react";
 
 interface Props {
   label: string;
-  /** Id of the control this label is for. */
+  /** Id of the control this label is for. Left out, a single control is given one. */
   htmlFor?: string;
   /** Helper text shown under the control. */
   hint?: ReactNode;
@@ -17,18 +17,25 @@ interface Props {
   children: ReactNode;
 }
 
-type Described = { "aria-describedby"?: string; "aria-invalid"?: boolean; "aria-required"?: boolean };
+type Described = { id?: string; "aria-describedby"?: string; "aria-invalid"?: boolean; "aria-required"?: boolean };
 
 /**
  * Label + control + hint. Wrap any control from `FormControls` in this. A
- * single control is told, for screen readers, what its hint or error says,
- * whether it's invalid and whether it's required.
+ * single control is named by the label (given an id for it if it has none),
+ * and told, for screen readers, what its hint or error says, whether it's
+ * invalid and whether it's required.
  */
 export default function FormField({ label, htmlFor, hint, error, required = false, optional = false, hideLabel = false, children }: Props) {
   const noteId = useId();
+  const ownId = useId();
   const note = error || hint ? noteId : undefined;
-  const control = isValidElement<Described>(children)
+  const single = isValidElement<Described>(children);
+  // A wrapper (a div around the control) can't be labelled; its control needs `htmlFor`.
+  const labelable = single && (typeof children.type !== "string" || ["input", "select", "textarea"].includes(children.type));
+  const controlId = htmlFor ?? (labelable ? (children.props.id ?? ownId) : undefined);
+  const control = single
     ? cloneElement(children, {
+        ...(labelable && !htmlFor && { id: controlId }),
         "aria-describedby": [children.props["aria-describedby"], note].filter(Boolean).join(" ") || undefined,
         ...(error && { "aria-invalid": true }),
         ...(required && { "aria-required": true }),
@@ -36,7 +43,7 @@ export default function FormField({ label, htmlFor, hint, error, required = fals
     : children;
   return (
     <div>
-      <label htmlFor={htmlFor} className={hideLabel ? "sr-only" : "block text-sm font-medium text-gray-700 mb-1"}>
+      <label htmlFor={controlId} className={hideLabel ? "sr-only" : "block text-sm font-medium text-gray-700 mb-1"}>
         {label}
         {required && (
           <span className="ml-0.5 text-red-500" aria-hidden>
