@@ -83,6 +83,7 @@ export default function EnvironmentMenu({ sandbox, environment, components = [],
                 <NavItem
                   key={c.id}
                   variant="menu"
+                  role={null}
                   label={c.name}
                   icon={componentTypeIcons[c.type]}
                   trailing={<Badge label={c.type} shape="tag" />}

@@ -73,8 +73,7 @@ export default function DropdownMenu({
   defaultOpen = false,
   shrink = false,
 }: Props) {
-  const { open, setOpen, ref } = usePopover(defaultOpen);
-
+  const { open, setOpen, choose, ref, menu } = usePopover(defaultOpen);
 
   return (
     <div ref={ref} className={`relative inline-block ${shrink ? "min-w-0 max-w-full" : ""}`}>
@@ -84,50 +83,51 @@ export default function DropdownMenu({
           variant="popover"
           role="menu"
           aria-label={ariaLabel}
+          {...menu}
           className={`absolute z-50 ${widthClass} p-1.5 ${
             placement === "beside" ? "left-full top-0 ml-2" : align === "right" ? "right-0 top-full mt-1.5" : "left-0 top-full mt-1.5"
           }`}
         >
-          {title && <p className="px-2.5 pb-1.5 pt-1 text-xs text-gray-500">{title}</p>}
-          <ul>
-            {items.map((item) => {
-              return (
-                <li key={item.id} className={item.divider ? "mt-1.5 border-t border-gray-100 pt-1.5" : undefined}>
-                  <NavItem
-                    variant="menu"
-                    label={item.label}
-                    icon={item.icon}
-                    leading={
-                      item.checked === undefined ? undefined : item.checked ? (
-                        <CheckSquare2 size={15} className="text-indigo-600" />
-                      ) : (
-                        <Square size={15} className="text-gray-300" />
-                      )
-                    }
-                    description={item.description}
-                    danger={item.tone === "danger"}
-                    disabled={item.disabled}
-                    onClick={() => {
-                      setOpen(false);
-                      onSelect(item.id);
-                    }}
-                    trailing={
-                      (item.tag || item.selected || item.shortcut) && (
-                        <>
-                          {item.tag && <Badge label={item.tag} shape="tag" />}
-                          {item.selected ? (
-                            <Check size={14} className="text-indigo-600" />
-                          ) : (
-                            item.shortcut && <span className="font-mono text-xs text-gray-400">{item.shortcut}</span>
-                          )}
-                        </>
-                      )
-                    }
-                  />
-                </li>
-              );
-            })}
-          </ul>
+          {title && <div className="px-2.5 pb-1.5 pt-1 text-xs text-gray-500">{title}</div>}
+          {items.map((item) => {
+            return (
+              <div key={item.id} className={item.divider ? "mt-1.5 border-t border-gray-100 pt-1.5" : undefined}>
+                <NavItem
+                  variant="menu"
+                  role={item.checked !== undefined ? "menuitemcheckbox" : item.selected !== undefined ? "menuitemradio" : "menuitem"}
+                  checked={item.checked ?? item.selected}
+                  label={item.label}
+                  icon={item.icon}
+                  leading={
+                    item.checked === undefined ? undefined : item.checked ? (
+                      <CheckSquare2 size={15} className="text-indigo-600" />
+                    ) : (
+                      <Square size={15} className="text-gray-300" />
+                    )
+                  }
+                  description={item.description}
+                  danger={item.tone === "danger"}
+                  disabled={item.disabled}
+                  onClick={() => {
+                    choose();
+                    onSelect(item.id);
+                  }}
+                  trailing={
+                    (item.tag || item.selected || item.shortcut) && (
+                      <>
+                        {item.tag && <Badge label={item.tag} shape="tag" />}
+                        {item.selected ? (
+                          <Check size={14} className="text-indigo-600" />
+                        ) : (
+                          item.shortcut && <span className="font-mono text-xs text-gray-400">{item.shortcut}</span>
+                        )}
+                      </>
+                    )
+                  }
+                />
+              </div>
+            );
+          })}
         </Surface>
       )}
     </div>

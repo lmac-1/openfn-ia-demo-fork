@@ -30,8 +30,17 @@ export interface NavItemProps {
   /** Without `to` or `href`, the item is a button that calls this. Links call it too, e.g. to close a menu. */
   onClick?: () => void;
   variant?: NavItemVariant;
-  /** In a `menu`: a `menuitem` (the default) or a listbox `option`. */
-  role?: "menuitem" | "option";
+  /**
+   * In a `menu`: a `menuitem` (the default), one that's ticked on and off
+   * (`menuitemcheckbox`) or one of several to pick (`menuitemradio`), a
+   * listbox `option`, or `null` for an action beside the list rather than in
+   * it, e.g. a picker's footer, which keeps its own role as a button or link.
+   */
+  role?: "menuitem" | "menuitemcheckbox" | "menuitemradio" | "option" | null;
+  /** For a `menuitemcheckbox` or `menuitemradio`: whether it's ticked or picked. */
+  checked?: boolean;
+  /** For an `option`: Tab lands on it, as the listbox's one Tab stop. Defaults to `active`. */
+  tabStop?: boolean;
   /** Red, for destructive menu items. */
   danger?: boolean;
   disabled?: boolean;
@@ -90,7 +99,9 @@ export default function NavItem({
   href,
   onClick,
   variant = "sidebar",
-  role,
+  role = "menuitem",
+  checked,
+  tabStop = active,
   danger = false,
   disabled = false,
 }: NavItemProps) {
@@ -102,13 +113,17 @@ export default function NavItem({
   // With a second line, the glyphs line up with the first.
   const nudge = description ? "mt-0.5" : "";
 
-  // Menus and listboxes carry their own roles; a side menu marks the current
-  // page, and a tree its open item. Themes restyle side menus by `nav-link`.
+  // Menus and listboxes carry their own roles, and the arrow keys move
+  // between their items, so only a listbox's chosen option is a Tab stop. A
+  // side menu marks the current page, and a tree its open item. Themes
+  // restyle side menus by `nav-link`.
   const a11y =
     variant === "menu"
-      ? role === "option"
-        ? { role, "aria-selected": active }
-        : { role: "menuitem" }
+      ? role === null
+        ? {}
+        : role === "option"
+          ? { role, "aria-selected": active, tabIndex: tabStop ? 0 : -1 }
+          : { role, "aria-checked": role === "menuitem" ? undefined : Boolean(checked), tabIndex: -1 }
       : {
           "aria-current": active ? (variant === "tree" ? ("true" as const) : ("page" as const)) : undefined,
           "data-ui": variant === "tree" ? "tree-item" : "nav-link",

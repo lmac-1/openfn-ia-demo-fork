@@ -1,7 +1,7 @@
 import { useId, type ReactNode } from "react";
 import { Check, ChevronDown, X } from "lucide-react";
 import Surface from "./Surface";
-import { usePopover } from "./use-popover";
+import { moveFocusByArrows, usePopover } from "./use-popover";
 import IconButton from "./IconButton";
 import NavItem from "./NavItem";
 import Checkbox from "./Checkbox";
@@ -112,27 +112,28 @@ export function FilterOptions({
   value: string;
   onChange: (id: string) => void;
 }) {
+  const tabStop = options.some((o) => o.id === value) ? value : options[0]?.id;
   return (
-    <ul role="listbox" aria-label={label} className="max-h-72 overflow-y-auto">
+    <div role="listbox" aria-label={label} onKeyDown={moveFocusByArrows} className="max-h-72 overflow-y-auto">
       {options.map((o) => (
-        <li key={o.id}>
-          <NavItem
-            variant="menu"
-            role="option"
-            active={o.id === value}
-            label={o.label}
-            description={o.description}
-            onClick={() => onChange(o.id)}
-            trailing={
-              <>
-                {o.count !== undefined && <span className="text-xs tabular-nums text-gray-400">{o.count}</span>}
-                {o.id === value && <Check size={14} className="text-indigo-600" />}
-              </>
-            }
-          />
-        </li>
+        <NavItem
+          key={o.id}
+          variant="menu"
+          role="option"
+          active={o.id === value}
+          tabStop={o.id === tabStop}
+          label={o.label}
+          description={o.description}
+          onClick={() => onChange(o.id)}
+          trailing={
+            <>
+              {o.count !== undefined && <span className="text-xs tabular-nums text-gray-400">{o.count}</span>}
+              {o.id === value && <Check size={14} className="text-indigo-600" />}
+            </>
+          }
+        />
       ))}
-    </ul>
+    </div>
   );
 }
 
@@ -191,25 +192,27 @@ export function FilterDateRange({
   beforeLabel?: string;
 }) {
   const id = useId();
+  const picked = presets.find((p) => !before && after === p.after) ?? presets[0];
   return (
     <div>
       {presets.length > 0 && (
-        <ul className="border-b border-gray-100 pb-1.5">
+        <div role="listbox" aria-label="Periods" onKeyDown={moveFocusByArrows} className="border-b border-gray-100 pb-1.5">
           {presets.map((p) => {
             const on = !before && after === p.after;
             return (
-              <li key={p.label}>
-                <NavItem
-                  variant="menu"
-                  label={p.label}
-                  active={on}
-                  onClick={() => onChange(p.after, "")}
-                  trailing={on && <Check size={14} className="text-indigo-600" />}
-                />
-              </li>
+              <NavItem
+                key={p.label}
+                variant="menu"
+                role="option"
+                label={p.label}
+                active={on}
+                tabStop={p === picked}
+                onClick={() => onChange(p.after, "")}
+                trailing={on && <Check size={14} className="text-indigo-600" />}
+              />
             );
           })}
-        </ul>
+        </div>
       )}
       <div className="flex flex-col gap-2 px-2.5 pb-1.5 pt-2.5">
         <FormField label={afterLabel} htmlFor={`${id}-after`}>

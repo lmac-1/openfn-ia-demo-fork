@@ -9,6 +9,8 @@ interface Props {
   href?: string;
   /** Without `to`, an action that looks like a link, e.g. "See full code". */
   onClick?: () => void;
+  /** With `onClick`, for a link that opens a menu: whether the menu is open. */
+  menuOpen?: boolean;
   children: ReactNode;
   /**
    * "default" for names in tables; "action" for "View all"-style links;
@@ -28,7 +30,7 @@ const variantClasses = {
  * prose. With `onClick` instead of `to` it's a button styled the same way;
  * with `href` it's an external link.
  */
-export default function TextLink({ to, href, onClick, children, variant = "default" }: Props) {
+export default function TextLink({ to, href, onClick, menuOpen, children, variant = "default" }: Props) {
   if (href !== undefined)
     return (
       <a
@@ -45,7 +47,12 @@ export default function TextLink({ to, href, onClick, children, variant = "defau
     );
   if (to === undefined)
     return (
-      <button type="button" onClick={onClick} data-ui="link" data-variant={variant} className={variantClasses[variant]}>
+      <button
+        type="button"
+        onClick={onClick}
+        aria-haspopup={menuOpen === undefined ? undefined : "menu"}
+        aria-expanded={menuOpen}
+        data-ui="link" data-variant={variant} className={variantClasses[variant]}>
         {children}
       </button>
     );

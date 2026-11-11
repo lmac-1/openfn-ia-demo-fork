@@ -62,7 +62,7 @@ export default function MenuButton({
             <ChevronDown size={14} className="-mr-0.5 opacity-70" />
           </Button>
         ) : (
-          <TextLink variant="action" onClick={toggle}>
+          <TextLink variant="action" onClick={toggle} menuOpen={open}>
             {LinkIcon && <LinkIcon size={12} />}
             {label}
             <ArrowRight size={12} />

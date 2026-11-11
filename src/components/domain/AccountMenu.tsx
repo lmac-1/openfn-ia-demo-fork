@@ -30,9 +30,7 @@ export default function AccountMenu({
   onLogOut,
   defaultOpen = false,
 }: Props) {
-  const { open, setOpen, ref } = usePopover(defaultOpen);
-  const close = () => setOpen(false);
-
+  const { open, setOpen, choose, ref, menu } = usePopover(defaultOpen);
 
   return (
     <div ref={ref} className="relative">
@@ -40,22 +38,24 @@ export default function AccountMenu({
         <Surface
           variant="popover"
           role="menu"
+          aria-label="Account"
+          {...menu}
           data-ui="popover"
           className="absolute bottom-full left-0 right-0 mb-2 p-1.5"
         >
           <p className="truncate px-2 pt-1 pb-1.5 text-xs text-gray-500">{user.email}</p>
-          <NavItem variant="menu" to="/user-settings" icon={Settings} label="Settings" onClick={close} />
+          <NavItem variant="menu" to="/user-settings" icon={Settings} label="Settings" onClick={choose} />
           {showOrganizationSettings && (
             <NavItem
               variant="menu"
               to="/organization-settings"
               icon={Building2}
               label="Organization settings"
-              onClick={close}
+              onClick={choose}
             />
           )}
           {showAdminSettings && (
-            <NavItem variant="menu" to="/admin-settings" icon={ShieldCheck} label="Admin settings" onClick={close} />
+            <NavItem variant="menu" to="/admin-settings" icon={ShieldCheck} label="Admin settings" onClick={choose} />
           )}
           <div className="my-1.5 border-t border-gray-200" />
           <NavItem
@@ -63,7 +63,7 @@ export default function AccountMenu({
             icon={LogOut}
             label="Log out"
             onClick={() => {
-              close();
+              choose();
               onLogOut?.();
             }}
           />

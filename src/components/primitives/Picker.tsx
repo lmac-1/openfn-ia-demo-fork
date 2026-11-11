@@ -1,6 +1,6 @@
 import { Check, ChevronDown } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import type { ReactNode } from "react";
+import { useId, type ReactNode } from "react";
 import Surface from "./Surface";
 import { usePopover } from "./use-popover";
 import NavItem from "./NavItem";
@@ -69,9 +69,16 @@ export default function Picker({
   highlight = false,
   trigger,
 }: Props) {
-  const { open, setOpen, ref } = usePopover(defaultOpen);
+  const { open, setOpen, choose, ref, menu } = usePopover(defaultOpen);
   const selected = options.find((o) => o.id === value);
-
+  const id = useId();
+  // Options next to each other with the same `group` are listed under its heading.
+  const groups = options.reduce<{ name?: string; options: PickerOption[] }[]>((all, option) => {
+    const last = all[all.length - 1];
+    if (last && last.name === option.group) last.options.push(option);
+    else all.push({ name: option.group, options: [option] });
+    return all;
+  }, []);
 
   const TriggerIcon = selected?.icon ?? Icon;
 
@@ -110,19 +117,14 @@ export default function Picker({
       </button>
 
       {open && (
-        <Surface variant="popover" className={`absolute left-0 top-full z-50 mt-1 ${menuWidthClass} p-1.5`}>
-          <ul role="listbox" aria-label={ariaLabel} className="max-h-72 overflow-y-auto">
-            {options.map((option, i) => {
-              const isSelected = option.id === value;
-              const startsGroup = option.group && option.group !== options[i - 1]?.group;
-              return (
-                <li key={option.id}>
-                  {startsGroup && (
-                    <div className="px-2 pb-1 pt-2 text-xs font-medium uppercase tracking-wide text-gray-400">
-                      {option.group}
-                    </div>
-                  )}
+        <Surface variant="popover" {...menu} className={`absolute left-0 top-full z-50 mt-1 ${menuWidthClass} p-1.5`}>
+          <div role="listbox" aria-label={ariaLabel} className="max-h-72 overflow-y-auto">
+            {groups.map((group, g) => {
+              const items = group.options.map((option) => {
+                const isSelected = option.id === value;
+                return (
                   <NavItem
+                    key={option.id}
                     variant="menu"
                     role="option"
                     active={isSelected}
@@ -139,23 +141,33 @@ export default function Picker({
                       )
                     }
                     onClick={() => {
-                      setOpen(false);
+                      choose();
                       onChange?.(option.id);
                     }}
                   />
-                </li>
+                );
+              });
+              if (!group.name) return items;
+              return (
+                <div key={`${g}-${group.name}`} role="group" aria-labelledby={`${id}-${g}`}>
+                  <div id={`${id}-${g}`} className="px-2 pb-1 pt-2 text-xs font-medium uppercase tracking-wide text-gray-400">
+                    {group.name}
+                  </div>
+                  {items}
+                </div>
               );
             })}
-          </ul>
+          </div>
           {footerAction && (
             <>
               <div className="my-1.5 border-t border-gray-200" />
               <NavItem
                 variant="menu"
+                role={null}
                 label={footerAction.label}
                 icon={footerAction.icon}
                 onClick={() => {
-                  setOpen(false);
+                  choose();
                   footerAction.onClick();
                 }}
               />
