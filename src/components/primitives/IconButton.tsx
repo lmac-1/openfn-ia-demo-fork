@@ -10,7 +10,11 @@ interface Props extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "children"
   label: string;
   /** Extra tooltip text, e.g. a keyboard shortcut. */
   hint?: string;
-  /** `2xs` 16px inside a pill or chip, `xs` 24px for dense rows, `sm` 28px for panel headers, `md` 32px for the toolbar and dialogs. */
+  /**
+   * `2xs` inside a pill or chip: it takes 16px of room but its click area is
+   * 24px, the smallest target WCAG allows. `xs` 24px for dense rows, `sm`
+   * 28px for panel headers, `md` 32px for the toolbar and dialogs.
+   */
   size?: IconButtonSize;
   /**
    * `ghost` (the default) is a quiet grey icon that lights up on hover: close,
@@ -31,7 +35,7 @@ interface Props extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "children"
 }
 
 const dims: Record<IconButtonSize, { box: string; icon: number }> = {
-  "2xs": { box: "h-4 w-4", icon: 11 },
+  "2xs": { box: "-m-1 h-6 w-6", icon: 11 },
   xs: { box: "h-6 w-6", icon: 13 },
   sm: { box: "h-7 w-7", icon: 15 },
   md: { box: "h-8 w-8", icon: 16 },
