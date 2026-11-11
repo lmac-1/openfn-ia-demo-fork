@@ -14,7 +14,7 @@ interface Props {
   children: ReactNode;
   /**
    * "default" for names in tables; "action" for "View all"-style links;
-   * "inline" for links inside running prose.
+   * "inline" for links inside running prose, underlined so colour isn't the only sign.
    */
   variant?: "default" | "action" | "inline";
 }
@@ -22,7 +22,7 @@ interface Props {
 const variantClasses = {
   default: "font-medium text-gray-900 hover:text-indigo-600 hover:underline",
   action: "inline-flex items-center gap-1 text-sm font-medium text-indigo-600 hover:text-indigo-700",
-  inline: "text-indigo-600 hover:text-indigo-700 hover:underline",
+  inline: "text-indigo-600 underline hover:text-indigo-700",
 };
 
 /**
