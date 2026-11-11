@@ -4,6 +4,14 @@
    Imported AFTER tailwindcss so its variable redefinitions win. */
 @import "./theme/theme.css";
 
+/* Tailwind 4 leaves buttons on the default arrow; give every enabled one a pointer. */
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
+}
+
 /* Motion along a canvas edge: dots travelling in the run's direction. */
 @keyframes edge-flow {
   to {
