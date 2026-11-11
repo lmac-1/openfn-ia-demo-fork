@@ -9,7 +9,7 @@ const meta: Meta<typeof StepRunDetails> = {
   component: StepRunDetails,
   decorators: [
     (Story) => (
-      <div className="h-72 w-[800px] overflow-auto border border-gray-200 bg-white">
+      <div tabIndex={0} role="region" aria-label="Step run details" className="h-72 w-[800px] overflow-auto border border-gray-200 bg-white">
         <Story />
       </div>
     ),

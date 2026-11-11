@@ -52,7 +52,7 @@ export default function AdaptorReferencePanel({ adaptor: info, snippets: allSnip
         </div>
         <SearchInput compact value={query} onChange={(e) => setQuery(e.target.value)} placeholder={`Search ${info.name} operations`} />
       </div>
-      <div className="min-h-0 flex-1 space-y-3 overflow-y-auto p-4">
+      <div tabIndex={0} role="region" aria-label={`${info.name} operations`} className="min-h-0 flex-1 space-y-3 overflow-y-auto p-4">
         {onInsert && stepLabel && (
           <p className="text-xs text-gray-500">
             Click a snippet to insert it at the cursor in <span className="font-medium text-gray-700">{stepLabel}</span>.

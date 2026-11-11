@@ -135,5 +135,5 @@ export default function CollectionView({ name, items, itemCount, byteSize, varia
       )}
     </Stack>
   );
-  return variant === "pane" ? <ScrollPane>{body}</ScrollPane> : body;
+  return variant === "pane" ? <ScrollPane label={name}>{body}</ScrollPane> : body;
 }

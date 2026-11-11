@@ -55,7 +55,7 @@ export default function EnvVarsView({ variables, projectName, onCreate, onUpdate
   ];
 
   return (
-    <ScrollPane>
+    <ScrollPane label="Environment variables">
       <Stack gap="lg">
         <SectionHeading
           title="Environment variables"

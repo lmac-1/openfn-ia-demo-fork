@@ -39,7 +39,7 @@ interface Props {
  */
 export default function SavedDataclipsView({ dataclips, onRun, onSave, onCreate }: Props) {
   return (
-    <ScrollPane>
+    <ScrollPane label="Saved dataclips">
       <Stack gap="lg">
         <SectionHeading
           title="Saved dataclips"

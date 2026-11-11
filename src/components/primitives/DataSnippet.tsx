@@ -99,6 +99,7 @@ export default function DataSnippet({
             <p className={`px-3 py-2.5 text-xs ${dark ? "text-gray-400" : "text-gray-500"}`}>{empty}</p>
           ) : (
             <pre
+              {...((expanded || fill) && { tabIndex: 0, role: "region", "aria-label": title })}
               className={`min-h-0 font-mono text-xs leading-5 ${
                 expanded ? "flex-1 overflow-auto px-3 py-2" : fill ? "flex-1 overflow-y-auto overflow-x-hidden px-3 py-2" : "overflow-hidden px-3 py-2"
               }`}

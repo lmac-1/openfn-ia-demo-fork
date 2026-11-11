@@ -24,7 +24,7 @@ export default function LogConsole({ lines }: { lines: LogLine[] }) {
           <ChevronDown size={12} />
         </button>
       </div>
-      <div className="flex-1 overflow-auto py-2 font-mono text-[12px] leading-5">
+      <div tabIndex={0} role="region" aria-label="Logs" className="flex-1 overflow-auto py-2 font-mono text-[12px] leading-5">
         {lines.map((line, i) => (
           <div key={i} className="flex gap-3 px-3 hover:bg-slate-800/60">
             <span className="w-6 select-none text-right text-slate-600">{i + 1}</span>

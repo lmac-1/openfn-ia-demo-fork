@@ -168,6 +168,8 @@ export default function CodeEditor({ code, onChange, ref, calls = noCalls, frame
 
   return (
     <div
+      // Read-only, nothing in it takes focus, so it does, to scroll from the keyboard.
+      {...(!onChange && { tabIndex: 0, role: "region", "aria-label": label })}
       className={`flex overflow-auto bg-white font-mono text-[13px] leading-6 ${frame === "box" ? "h-96 rounded-md border border-gray-200" : "h-full"}`}
     >
       {/* Gutter */}

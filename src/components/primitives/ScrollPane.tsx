@@ -1,6 +1,8 @@
 import type { ReactNode } from "react";
 
 interface Props {
+  /** What the pane shows, e.g. "Environment variables": its name, so it can be found and scrolled from the keyboard. */
+  label: string;
   children?: ReactNode;
 }
 
@@ -10,9 +12,9 @@ interface Props {
  * place of something else, such as a page opened inside an editor's main
  * area. Its content can lay itself out by the pane's width (`@container`).
  */
-export default function ScrollPane({ children }: Props) {
+export default function ScrollPane({ label, children }: Props) {
   return (
-    <div className="@container h-full overflow-y-auto bg-gray-50">
+    <div tabIndex={0} role="region" aria-label={label} className="@container h-full overflow-y-auto bg-gray-50">
       <div className="mx-auto max-w-6xl space-y-6 px-6 pb-10 pt-4">{children}</div>
     </div>
   );

@@ -53,7 +53,10 @@ export default function SnippetCard({ snippet, onInsert }: Props) {
           </span>
         )}
       </div>
-      <pre className={`overflow-x-auto border-t border-gray-100 bg-gray-50 px-3 py-2 font-mono text-xs leading-relaxed text-gray-800 ${insert ? "group-hover:bg-indigo-50/40" : ""}`}>
+      {/* A button can't hold something focusable, so only a read-only card's code scrolls from the keyboard. */}
+      <pre
+        {...(!insert && { tabIndex: 0, role: "region", "aria-label": snippet.title })}
+        className={`overflow-x-auto border-t border-gray-100 bg-gray-50 px-3 py-2 font-mono text-xs leading-relaxed text-gray-800 ${insert ? "group-hover:bg-indigo-50/40" : ""}`}>
         <code>{snippet.code}</code>
       </pre>
     </div>

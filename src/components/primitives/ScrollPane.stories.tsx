@@ -13,7 +13,7 @@ type Story = StoryObj<typeof ScrollPane>;
 
 export const Default: Story = {
   render: () => (
-    <ScrollPane>
+    <ScrollPane label="A view in a pane">
       <SectionHeading title="A view in a pane" description="It scrolls inside the region it fills." />
       {Array.from({ length: 6 }, (_, i) => (
         <Card key={i} title={`Section ${i + 1}`} description="Content that runs past the bottom of the pane." />

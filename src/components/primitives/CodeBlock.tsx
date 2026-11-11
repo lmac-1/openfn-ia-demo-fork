@@ -20,7 +20,7 @@ export default function CodeBlock({ code, label, tone = "dark" }: Props) {
           {label}
         </div>
       )}
-      <pre className={`overflow-x-auto px-4 py-3 text-xs leading-relaxed ${light ? "text-gray-800" : "text-gray-100"}`}>
+      <pre tabIndex={0} role="region" aria-label={label ?? "Code"} className={`overflow-x-auto px-4 py-3 text-xs leading-relaxed ${light ? "text-gray-800" : "text-gray-100"}`}>
         <code>{code}</code>
       </pre>
     </div>
